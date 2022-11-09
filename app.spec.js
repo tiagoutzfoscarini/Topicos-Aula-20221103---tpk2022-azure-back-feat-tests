@@ -18,7 +18,6 @@ describe("Conjunto de testes app",()=>{
         const databaseSpy = jest.spyOn(database, 'gravarDados');
         databaseSpy.mockReturnValue(true);
 
-      
         //cenário
         const esperado="Ok";
         //execução
@@ -28,8 +27,6 @@ describe("Conjunto de testes app",()=>{
                     nome:"236",
                     endereco:"7889"});
         
-      
-
         //validação
         expect(res.text).toBe(esperado);
         expect(res.status).toBe(201);
@@ -39,7 +36,6 @@ describe("Conjunto de testes app",()=>{
         const databaseSpy = jest.spyOn(database, 'gravarDados');
         databaseSpy.mockReturnValue(false);//gravarDados Sempre Vai Retornar false
 
-      
         //cenário
         const esperado="NOk";
 
@@ -50,8 +46,30 @@ describe("Conjunto de testes app",()=>{
                   
       
           expect(res.status).toBe(401);
-    
-        
     });
 
+    it ("Testando '/clientes/listar'",async()=>{
+        //cenário
+        const esperado=JSON.parse(localStorage.getItem('myKey'));
+        const codigoEsperado = 200;
+        //execução
+        const res=await request(app).get("/clientes/listar");
+        
+        
+        //validação
+        expect(res.text).toBe(esperado);
+        expect(res.status).toBe(codigoEsperado);
+    });
+    
+    // it ("Testando '/clientes/listar/:key'",async()=>{
+    //     //cenário
+    //     const esperado=JSON.parse(localStorage.getItem('myKey'));
+    //     const codigoEsperado = 200;
+    //     //execução
+    //     const res=await request(app).get("/clientes/listar/:key");
+        
+    //     //validação
+    //     expect(res.text).toBe(key);
+    //     expect(res.status).toBe(codigoEsperado);
+    // });
 })
